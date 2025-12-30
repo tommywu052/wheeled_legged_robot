@@ -4,7 +4,7 @@
 
 ---
 
-## 步驟1：編譯系統（2分鐘）
+## 步驟1：編譯系統 （2分鐘 , Note I'm using Jetson Orin NX 16G）
 
 ```bash
 cd ~/legged_robot/ROS2_Packages
