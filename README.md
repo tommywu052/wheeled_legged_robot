@@ -2,6 +2,20 @@
 
 本指南將幫助您在5分鐘內完成所有配置並開始使用！
 
+## 🎥 視頻展示
+
+**【ROS2輪足機器人展示】**
+
+[![ROS2輪足機器人展示](https://i0.hdslb.com/bfs/archive/placeholder.jpg)](https://www.bilibili.com/video/BV1ZdveB1E4g/?share_source=copy_web&vd_source=6ce322261c8d85454a0bce5d83c69113)
+
+👉 **觀看視頻**: [https://www.bilibili.com/video/BV1ZdveB1E4g/](https://www.bilibili.com/video/BV1ZdveB1E4g/?share_source=copy_web&vd_source=6ce322261c8d85454a0bce5d83c69113)
+
+## 💻 硬件平台
+
+- **上位機**: NVIDIA Jetson Orin NX 16GB
+- **操作系統**: Ubuntu 22.04 (推薦)
+- **ROS版本**: ROS2 Humble
+
 ---
 
 ## 步驟1：編譯系統 （2分鐘 , Note I'm using Jetson Orin NX 16G）
