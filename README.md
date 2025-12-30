@@ -8,7 +8,7 @@
 
 <div align="center">
   <a href="https://www.bilibili.com/video/BV1ZdveB1E4g/?share_source=copy_web&vd_source=6ce322261c8d85454a0bce5d83c69113">
-    <img src="images/robot_demo.jpg" alt="ROS2輪足機器人展示" width="600"/>
+    <img src="./images/robot_demo.jpg" alt="ROS2輪足機器人展示" width="600"/>
   </a>
   <p><i>點擊圖片觀看完整視頻演示</i></p>
 </div>
