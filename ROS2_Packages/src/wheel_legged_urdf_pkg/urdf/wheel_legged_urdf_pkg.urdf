@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="wheel_legged_urdf_pkg">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.00121782667412224 -0.000210352203166787 -2.21299226362964E-05"
+        rpy="0 0 0" />
+      <mass
+        value="2.00185606218299" />
+      <inertia
+        ixx="0.00494176488313629"
+        ixy="2.02076436576181E-06"
+        ixz="-1.34594201707221E-05"
+        iyy="0.00564170400699066"
+        iyz="-3.68666172302085E-07"
+        izz="0.00881398606635347" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="left_front_motor_link">
+    <inertial>
+      <origin
+        xyz="0.0624436684240075 0.000619326059130704 0.0200324549537225"
+        rpy="0 0 0" />
+      <mass
+        value="0.141618184762676" />
+      <inertia
+        ixx="3.01866212630707E-05"
+        ixy="-4.06501419007613E-06"
+        ixz="-2.12212302875267E-05"
+        iyy="0.000434045739664063"
+        iyz="-2.13539578979558E-07"
+        izz="0.000450595261060971" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_front_motor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_front_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_front_joint_link"
+    type="revolute">
+    <origin
+      xyz="0.042498 0.1395 0.00013155"
+      rpy="-1.5708 -0.0033107 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_front_motor_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="left_l1_link">
+    <inertial>
+      <origin
+        xyz="-0.095105462450709 0.0731775307867209 -0.0163"
+        rpy="0 0 0" />
+      <mass
+        value="0.177912779401" />
+      <inertia
+        ixx="0.000418025769227047"
+        ixy="0.000499776117636955"
+        ixz="2.64951433434358E-19"
+        iyy="0.000683016195362116"
+        iyz="-2.12822073937659E-19"
+        izz="0.00109442528532047" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_l1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_l1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_l1_joint_link"
+    type="revolute">
+    <origin
+      xyz="0.14999 0.0015005 0.0238"
+      rpy="0 0 0" />
+    <parent
+      link="left_front_motor_link" />
+    <child
+      link="left_l1_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="left_back_motor_link">
+    <inertial>
+      <origin
+        xyz="-0.0749796058107964 0.0036928214728846 0.00747310925542913"
+        rpy="0 0 0" />
+      <mass
+        value="0.115659747495916" />
+      <inertia
+        ixx="2.26464431379227E-05"
+        ixy="1.47051792432662E-05"
+        ixz="2.33204786093751E-07"
+        iyy="0.000319765274780509"
+        iyz="-1.1513773440399E-08"
+        izz="0.000338116683794751" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_back_motor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_back_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_back_joint_link"
+    type="revolute">
+    <origin
+      xyz="-0.042501 0.1395 -0.00014986"
+      rpy="-1.5708 -0.0033107 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_back_motor_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="left_l4_link">
+    <inertial>
+      <origin
+        xyz="0.128060879717462 0.0924384050013035 0.0178378642085842"
+        rpy="0 0 0" />
+      <mass
+        value="0.248961638545411" />
+      <inertia
+        ixx="0.000729426860709992"
+        ixy="-0.000882041567120079"
+        ixz="-2.87270453908768E-05"
+        iyy="0.00131469091952802"
+        iyz="-2.07358301501036E-05"
+        izz="0.00202550485596196" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_l4_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_l4_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_l4_joint_link"
+    type="revolute">
+    <origin
+      xyz="-0.14982 0.0073876 0.0062"
+      rpy="0 0 0" />
+    <parent
+      link="left_back_motor_link" />
+    <child
+      link="left_l4_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="left_l3_link">
+    <inertial>
+      <origin
+        xyz="-0.000243308150557599 0.000117251658979897 0.0403173391634845"
+        rpy="0 0 0" />
+      <mass
+        value="0.115219399015165" />
+      <inertia
+        ixx="4.94098181788803E-05"
+        ixy="6.17843266765886E-07"
+        ixz="-2.64375001717254E-08"
+        iyy="4.89676896049995E-05"
+        iyz="8.42629320502447E-08"
+        izz="8.66983692952939E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_l3_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_l3_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_l3_joint_link"
+    type="fixed">
+    <origin
+      xyz="0.1946 0.14047 0.0088"
+      rpy="0 0 3.1416" />
+    <parent
+      link="left_l4_link" />
+    <child
+      link="left_l3_link" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="left_wheel_motor_link">
+    <inertial>
+      <origin
+        xyz="1.13167687540439E-07 1.25858476307528E-07 -0.00499719779399502"
+        rpy="0 0 0" />
+      <mass
+        value="0.842051413621127" />
+      <inertia
+        ixx="0.00251019461435954"
+        ixy="6.84459368766154E-08"
+        ixz="-1.1260888209865E-09"
+        iyy="0.00251018902018574"
+        iyz="-1.29638291833447E-09"
+        izz="0.00474412594811298" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_wheel_motor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/left_wheel_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wheel_joint_link"
+    type="continuous">
+    <origin
+      xyz="0 0 0.0565"
+      rpy="0 0 3.1416" />
+    <parent
+      link="left_l3_link" />
+    <child
+      link="left_wheel_motor_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="right_front_motor_link">
+    <inertial>
+      <origin
+        xyz="0.0623057259191661 0.00415660632329509 0.0200324549608647"
+        rpy="0 0 0" />
+      <mass
+        value="0.141618184759225" />
+      <inertia
+        ixx="3.19275897950573E-05"
+        ixy="-2.67693748327935E-05"
+        ixz="-2.11754471522572E-05"
+        iyy="0.000432304770765368"
+        iyz="-1.40948581726657E-06"
+        izz="0.000450595260936554" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_front_motor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_front_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_front_joint_link"
+    type="revolute">
+    <origin
+      xyz="0.042501 -0.1395 0.00013156"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_front_motor_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="right_l1_link">
+    <inertial>
+      <origin
+        xyz="-0.0932955290225116 -0.0754714798080031 -0.0162999999999999"
+        rpy="0 0 0" />
+      <mass
+        value="0.177912779401" />
+      <inertia
+        ixx="0.000442512909634909"
+        ixy="-0.000505633667279406"
+        ixz="1.44898630941009E-19"
+        iyy="0.000658529054954254"
+        iyz="1.11471792933153E-19"
+        izz="0.00109442528532047" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_l1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_l1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_l1_joint_link"
+    type="revolute">
+    <origin
+      xyz="0.14967 0.0099718 0.0238"
+      rpy="0 0 0.0033107" />
+    <parent
+      link="right_front_motor_link" />
+    <child
+      link="right_l1_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="right_back_motor_link">
+    <inertial>
+      <origin
+        xyz="-0.075017236320334 -0.00291294758678277 0.00747310925542902"
+        rpy="0 0 0" />
+      <mass
+        value="0.115659747495916" />
+      <inertia
+        ixx="2.23727688233546E-05"
+        ixy="-1.16126485502262E-05"
+        ixz="2.33311901434062E-07"
+        iyy="0.000320038949095077"
+        iyz="9.08822782981713E-09"
+        izz="0.000338116683794751" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_back_motor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_back_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_back_joint_link"
+    type="revolute">
+    <origin
+      xyz="-0.042498 -0.1395 -0.00014985"
+      rpy="1.5708 -0.0033107 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_back_motor_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="right_l4_link">
+    <inertial>
+      <origin
+        xyz="0.130296403284804 -0.0892597043985118 0.0178378639085093"
+        rpy="0 0 0" />
+      <mass
+        value="0.24896163452195" />
+      <inertia
+        ixx="0.000686392557995977"
+        ixy="0.000866578875931979"
+        ixz="-2.92282808341042E-05"
+        iyy="0.00135772521521225"
+        iyz="2.00231201554777E-05"
+        izz="0.00202550485005715" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_l4_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_l4_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_l4_joint_link"
+    type="revolute">
+    <origin
+      xyz="-0.14989 -0.0058294 0.0062"
+      rpy="0 0 0" />
+    <parent
+      link="right_back_motor_link" />
+    <child
+      link="right_l4_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="right_l3_link">
+    <inertial>
+      <origin
+        xyz="-2.80713764217733E-05 -0.000268623950909944 0.0403173391022381"
+        rpy="0 0 0" />
+      <mass
+        value="0.115219399567085" />
+      <inertia
+        ixx="4.94114719513777E-05"
+        ixy="-6.17249628353162E-07"
+        ixz="-7.0359614159779E-08"
+        iyy="4.89660363029196E-05"
+        iyz="-5.33732793669032E-08"
+        izz="8.66983696437399E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_l3_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_l3_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_l3_joint_link"
+    type="fixed">
+    <origin
+      xyz="0.198 -0.13564 0.0088"
+      rpy="0 0 0" />
+    <parent
+      link="right_l4_link" />
+    <child
+      link="right_l3_link" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="right_wheel_motor_link">
+    <inertial>
+      <origin
+        xyz="-6.16438811410977E-08 -1.57630152236576E-07 -0.00499719843039104"
+        rpy="0 0 0" />
+      <mass
+        value="0.842051685465564" />
+      <inertia
+        ixx="0.002510149306242"
+        ixy="5.33391652794576E-08"
+        ixz="5.97908481403005E-10"
+        iyy="0.0025102352737572"
+        iyz="1.60971688347882E-09"
+        izz="0.00474412701360746" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_wheel_motor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/right_wheel_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wheel_joint_link"
+    type="continuous">
+    <origin
+      xyz="0 0 0.0565"
+      rpy="0 0 0" />
+    <parent
+      link="right_l3_link" />
+    <child
+      link="right_wheel_motor_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="imu_link">
+    <inertial>
+      <origin
+        xyz="-0.00295011190315089 6.01878603506481E-05 -0.0022678069753778"
+        rpy="0 0 0" />
+      <mass
+        value="0.0006342289369769" />
+      <inertia
+        ixx="1.61792914987704E-08"
+        ixy="-1.94879474217619E-16"
+        ixz="2.82847847582473E-11"
+        iyy="9.69970107461154E-09"
+        iyz="-1.20746251134688E-15"
+        izz="2.47220721297651E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/imu_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/imu_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="imu_joint_link"
+    type="fixed">
+    <origin
+      xyz="0.0086888 0.0615 0.021391"
+      rpy="0 -0.0033107 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="imu_link" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+  <link
+    name="laser">
+    <inertial>
+      <origin
+        xyz="-0.000295667186511292 2.02745806254789E-17 -0.00821757116891281"
+        rpy="0 0 0" />
+      <mass
+        value="0.0619661956356509" />
+      <inertia
+        ixx="1.51239273004584E-05"
+        ixy="1.16746609500923E-07"
+        ixz="3.94028572670957E-09"
+        iyy="1.49535540724283E-05"
+        iyz="-2.27877441163121E-22"
+        izz="1.86073781537633E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/lidar_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://wheel_legged_urdf_pkg/meshes/lidar_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lidar_joint_link"
+    type="fixed">
+    <origin
+      xyz="0.0450664766561181 -0.000722222222221321 0.103849771542335"
+      rpy="0 -0.00331072414141279 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="laser" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="111"
+      velocity="111" />
+  </joint>
+</robot>
