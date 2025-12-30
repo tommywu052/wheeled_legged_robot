@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-轮足机器人 + N10 Lidar 建图 Launch 文件
+輪足機器人 + N10 Lidar 建圖 Launch 文件
 功能：
-1. 启动机器人基础节点 (wl_base_node)
-2. 发布机器人URDF模型 (robot_state_publisher) - 自动发布所有TF变换
-3. 启动N10 Lidar驱动
-4. 启动SLAM Toolbox进行建图
+1. 啟動機器人基礎節點 (wl_base_node)
+2. 發布機器人URDF模型 (robot_state_publisher) - 自動發布所有TF變換
+3. 啟動N10 Lidar驅動
+4. 啟動SLAM Toolbox進行建圖
 """
 
 from launch import LaunchDescription
@@ -17,17 +17,17 @@ import os
 
 def generate_launch_description():
     
-    # 获取URDF文件路径
+    # 獲取URDF文件路徑
     urdf_pkg_path = get_package_share_directory('wheel_legged_urdf_pkg')
     urdf_file = os.path.join(urdf_pkg_path, 'urdf', 'wheel_legged_urdf_pkg.urdf')
     
-    # 读取URDF文件
+    # 讀取URDF文件
     with open(urdf_file, 'r') as infp:
         robot_description = infp.read()
 
 
-    # 临时方案：使用静态TF替代（仅用于无机器人情况下测试URDF可视化）
-    # 注意：这不能用于实际建图！只能用于查看模型
+    # 臨時方案：使用靜態TF替代（僅用於無機器人情況下測試URDF可視化）
+    # 注意：這不能用於實際建圖！只能用於查看模型
     # static_odom_to_base = Node(
     #     package='tf2_ros',
     #     executable='static_transform_publisher',
@@ -36,12 +36,12 @@ def generate_launch_description():
     #     output='screen'
     # )
     
-    # 1. Robot State Publisher - 发布URDF中定义的所有TF变换
-    # 这会自动发布 base_link -> laser 的变换（从URDF中读取）
-    # URDF中定义的Lidar位置：
+    # 1. Robot State Publisher - 發布URDF中定義的所有TF變換
+    # 這會自動發布 base_link -> laser 的變換（從URDF中讀取）
+    # URDF中定義的Lidar位置：
     #   X = 0.0451m (向前4.5cm)
     #   Y = -0.0007m (基本在中心)
-    #   Z = 0.1038m (向上10.4cm，相对于base_link)
+    #   Z = 0.1038m (向上10.4cm，相對於base_link)
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -53,9 +53,9 @@ def generate_launch_description():
         }]
     )
 
-    # 2b. Joint State Publisher - 发布关节状态
-    # 为URDF中的revolute关节提供默认角度，消除RViz中的"No transform"错误
-    # 这会发布 /joint_states 话题，robot_state_publisher会读取它来计算revolute关节的TF
+    # 2b. Joint State Publisher - 發布關節狀態
+    # 為URDF中的revolute關節提供默認角度，消除RViz中的"No transform"錯誤
+    # 這會發布 /joint_states 話題，robot_state_publisher會讀取它來計算revolute關節的TF
     # joint_state_publisher_node = Node(
     #     package='joint_state_publisher',
     #     executable='joint_state_publisher',
@@ -67,8 +67,8 @@ def generate_launch_description():
     #     }]
     # )
     
-    # 2. 启动N10 Lidar驱动
-    # 注意：确保lidar话题名称为 /scan
+    # 2. 啟動N10 Lidar驅動
+    # 注意：確保lidar話題名稱為 /scan
     # lidar_node = IncludeLaunchDescription(
     #     PythonLaunchDescriptionSource([
     #         get_package_share_directory('lslidar_driver'),
@@ -82,7 +82,7 @@ def generate_launch_description():
     #     namespace='x10',
     #     output='screen',
     #     parameters=[{
-    #         # 基本参数
+    #         # 基本參數
     #         'lidar_type': 'X10',
     #         'lidar_model': 'N10',
     #         'serial_port': '/dev/ttyUSB0',
@@ -91,8 +91,8 @@ def generate_launch_description():
     #         'difop_port': 2369,
     #         'packet_rate': 188.0,
             
-    #         # 扫描参数
-    #         'frame_id': 'laser',  # 使用URDF中定义的frame
+    #         # 掃描參數
+    #         'frame_id': 'laser',  # 使用URDF中定義的frame
     #         'pointcloud_topic': 'lslidar_point_cloud',
     #         'laserscan_topic': 'scan',
     #         'use_time_service': False,
@@ -103,31 +103,31 @@ def generate_launch_description():
     #         'enable_noise_filter': False,
     #         'N10Plus_hz': 10,
             
-    #         # 范围和角度参数
+    #         # 範圍和角度參數
     #         'min_range': 0.15,
     #         'max_range': 50.0,
     #         'angle_disable_min': 0,
     #         'angle_disable_max': 0,
             
-    #         # ⭐ 关键：修正左右镜像问题
-    #         # 启用坐标变换并旋转180°（π弧度）
-    #         'is_pretreatment': True,      # 启用坐标变换预处理
+    #         # ⭐ 關鍵：修正左右鏡像問題
+    #         # 啟用坐標變換並旋轉180°（π弧度）
+    #         'is_pretreatment': True,      # 啟用坐標變換預處理
     #         'x_offset': 0.0,
     #         'y_offset': 0.0,
     #         'z_offset': 0.0,
     #         'roll': 0.0,
     #         'pitch': 0.0,
-    #         'yaw': 3.14159265359,         # 180° (π) - 修正镜像
+    #         'yaw': 3.14159265359,         # 180° (π) - 修正鏡像
             
-    #         # 高级变换（如果simple参数不生效，尝试使用矩阵变换）
+    #         # 高級變換（如果simple參數不生效，嘗試使用矩陣變換）
     #         'is_MatrixTransformation': False,
     #     }],
     #     remappings=[
-    #         # 将/x10/scan映射到/scan，供SLAM使用
+    #         # 將/x10/scan映射到/scan，供SLAM使用
     #         ('/x10/scan', '/scan'),
     #     ]
     # )
-    # 3. 启动SLAM Toolbox进行异步建图
+    # 3. 啟動SLAM Toolbox進行異步建圖
     slam_node = Node(
         package='slam_toolbox',
         executable='async_slam_toolbox_node',
@@ -169,8 +169,8 @@ def generate_launch_description():
         # ]
     )
 
-        # 5. 启动RViz进行可视化
-    # 使用默认配置启动RViz（用户需要手动添加显示项）
+        # 5. 啟動RViz進行可視化
+    # 使用默認配置啟動RViz（用戶需要手動添加顯示項）
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
@@ -179,11 +179,11 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
-        #static_odom_to_base,  # 临时静态TF（仅用于测试，不能实际建图）
+        #static_odom_to_base,  # 臨時靜態TF（僅用於測試，不能實際建圖）
         robot_state_publisher_node,
-        #joint_state_publisher_node,  # 发布关节状态，修复RViz中的"No transform"错误
+        #joint_state_publisher_node,  # 發布關節狀態，修復RViz中的"No transform"錯誤
         #lidar_node,
         slam_node,
-        rviz_node,  # RViz可视化
+        rviz_node,  # RViz可視化
     ])
 

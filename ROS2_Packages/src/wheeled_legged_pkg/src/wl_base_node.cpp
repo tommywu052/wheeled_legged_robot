@@ -22,7 +22,7 @@
 #include <nav_msgs/msg/odometry.hpp>
 // 数学函数库（sin, cos等）
 #include <cmath>
-// 时间处理库
+// 時間處理庫
 #include <chrono>
 // 线程支持
 #include <thread>
@@ -43,7 +43,7 @@
 #include <limits>
 #include <unistd.h>   // 新增：用于close()函数
 #include <fcntl.h>    // 新增：用于文件控制操作
-#include <errno.h>    // 新增：用于错误处理
+#include <errno.h>    // 新增：用於錯誤處理
 #include "robot_functions.h"
 #include "std_msgs/msg/int16_multi_array.hpp"
 
@@ -115,7 +115,7 @@ public:
     else 
     {
       RCLCPP_ERROR(this->get_logger(), "串口選擇失敗，節點無法正常啟動");
-      // 可以在这里添加适当的错误处理逻辑
+      // 可以在這裡添加適當的錯誤處理邏輯
     }
   }
 
@@ -261,7 +261,7 @@ private:
     };
 
 
-    // 验证关节数量
+    // 驗證關節數量
     if (g_joint_names.size() != MotorID::TOTAL_COUNT) {
         RCLCPP_INFO(this->get_logger(), "关节名称数量与电机总数不匹配！");
     }
@@ -294,7 +294,7 @@ private:
       20ms, std::bind(&Legwheel::timer_callback, this));//定时发布IMU 和里程计数据
 
     timer2_ = this->create_wall_timer(
-      10ms,std::bind(&Legwheel::timer2_callback, this)//给下位机定时发送数据 定时发布IMU 和里程计数据
+      10ms,std::bind(&Legwheel::timer2_callback, this)//給下位機定時發送數據 定時發布IMU 和裡程計數據
     );
       
 
@@ -915,7 +915,7 @@ private:
     // 姿态信息（旋转）   
     transform.transform.rotation = odom_msg.pose.pose.orientation;
     
-    // 发送变换
+    // 發送變換
     tf_broadcaster_->sendTransform(transform);
   }
 
@@ -972,9 +972,9 @@ private:
     odom.x += dx * cos(odom.angle);
     odom.y += dx * sin(odom.angle);
     
-    // 打印下位机反馈的里程计数据（用于调试）
+    // 打印下位機反饋的裡程計數據（用於調試）
     // static int odom_counter = 0;
-    // if(++odom_counter >= 50) {  // 每50次打印一次（约1秒）
+    // if(++odom_counter >= 50) {  // 每50次打印一次（約1秒）
     //   RCLCPP_INFO(this->get_logger(), 
     //               "📊 下位机反馈 | 左轮:%.3f m/s | 右轮:%.3f m/s | 前进:%.3f m/s | 角速度:%.3f rad/s",
     //               ROS_body.milemeter.LeftWheelSpeed, 

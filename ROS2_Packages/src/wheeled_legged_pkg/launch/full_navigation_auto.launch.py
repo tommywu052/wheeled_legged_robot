@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-完整导航系统自动启动 Launch 文件
-包含：机器人基础节点、激光雷达、导航系统、自动初始化
+完整導航系統自動啟動 Launch 文件
+包含：機器人基礎節點、激光雷達、導航系統、自動初始化
 """
 
 import os
@@ -14,44 +14,44 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    # 获取包路径
+    # 獲取包路徑
     pkg_dir = get_package_share_directory('wheeled_legged_pkg')
     
-    # 声明参数
+    # 聲明參數
     declare_serial_port = DeclareLaunchArgument(
         'serial_port',
         default_value='/dev/ttyACM0',
-        description='机器人串口设备路径'
+        description='機器人串口設備路徑'
     )
     
     declare_lidar_port = DeclareLaunchArgument(
         'lidar_port',
         default_value='/dev/ttyUSB0',
-        description='激光雷达串口设备路径'
+        description='激光雷達串口設備路徑'
     )
     
     declare_map_file = DeclareLaunchArgument(
         'map',
         default_value=os.path.join(os.path.expanduser('~'), 'maps', 'my_map2.yaml'),
-        description='地图文件路径'
+        description='地圖文件路徑'
     )
     
     declare_params_file = DeclareLaunchArgument(
         'params_file',
         default_value=os.path.join(pkg_dir, 'config', 'nav2_params.yaml'),
-        description='Nav2 参数文件路径'
+        description='Nav2 參數文件路徑'
     )
     
     declare_init_x = DeclareLaunchArgument(
         'init_x',
         default_value='0.0',
-        description='AMCL 初始 X 坐标（地图坐标系）'
+        description='AMCL 初始 X 坐標（地圖坐標系）'
     )
     
     declare_init_y = DeclareLaunchArgument(
         'init_y',
         default_value='0.0',
-        description='AMCL 初始 Y 坐标（地图坐标系）'
+        description='AMCL 初始 Y 坐標（地圖坐標系）'
     )
     
     declare_init_yaw = DeclareLaunchArgument(
@@ -63,10 +63,10 @@ def generate_launch_description():
     declare_wait_time = DeclareLaunchArgument(
         'wait_time',
         default_value='15.0',
-        description='启动后等待多少秒再初始化 AMCL'
+        description='啟動後等待多少秒再初始化 AMCL'
     )
     
-    # 获取参数
+    # 獲取參數
     serial_port = LaunchConfiguration('serial_port')
     map_file = LaunchConfiguration('map')
     params_file = LaunchConfiguration('params_file')
@@ -75,7 +75,7 @@ def generate_launch_description():
     init_yaw = LaunchConfiguration('init_yaw')
     wait_time = LaunchConfiguration('wait_time')
     
-    # ========== 1. 机器人基础节点（自动选择串口）==========
+    # ========== 1. 機器人基礎節點（自動選擇串口）==========
     wl_base_node = Node(
         package='wheeled_legged_pkg',
         executable='wl_base_node',
@@ -83,15 +83,15 @@ def generate_launch_description():
         output='screen',
         parameters=[{
             'serial_port': serial_port,
-            'auto_select': True  # 自动选择串口
+            'auto_select': True  # 自動選擇串口
         }]
     )
     
-    # ========== 2. 激光雷达节点 ==========
-    # 注意：这里假设 lslidar_driver 包在同一个工作空间或已经 source
-    # 如果在不同工作空间，需要提前 source 或使用绝对路径
+    # ========== 2. 激光雷達節點 ==========
+    # 注意：這裡假設 lslidar_driver 包在同一個工作空間或已經 source
+    # 如果在不同工作空間，需要提前 source 或使用絕對路徑
     
-    # 尝试获取 lslidar_driver 包路径
+    # 嘗試獲取 lslidar_driver 包路徑
     try:
         lslidar_pkg_dir = get_package_share_directory('lslidar_driver')
         lslidar_launch_file = os.path.join(lslidar_pkg_dir, 'launch', 'lsn10_launch.py')
@@ -101,14 +101,14 @@ def generate_launch_description():
             launch_arguments={}.items()
         )
     except Exception as e:
-        print(f"⚠️  警告：无法找到 lslidar_driver 包: {e}")
-        print("   请手动启动激光雷达或确保已 source 激光雷达工作空间")
+        print(f"⚠️  警告：無法找到 lslidar_driver 包: {e}")
+        print("   請手動啟動激光雷達或確保已 source 激光雷達工作空間")
         lidar_node = ExecuteProcess(
-            cmd=['echo', '⚠️  激光雷达节点未启动，请手动启动：ros2 launch lslidar_driver lsn10_launch.py'],
+            cmd=['echo', '⚠️  激光雷達節點未啟動，請手動啟動：ros2 launch lslidar_driver lsn10_launch.py'],
             output='screen'
         )
     
-    # ========== 3. 导航系统（包含所有 Nav2 组件）==========
+    # ========== 3. 導航系統（包含所有 Nav2 組件）==========
     navigation_launch_file = os.path.join(pkg_dir, 'launch', 'navigation_with_lidar.launch.py')
     
     navigation_system = IncludeLaunchDescription(
@@ -119,7 +119,7 @@ def generate_launch_description():
         }.items()
     )
     
-    # ========== 4. 自动初始化 AMCL（延迟启动）==========
+    # ========== 4. 自動初始化 AMCL（延遲啟動）==========
     auto_init_node = Node(
         package='wheeled_legged_pkg',
         executable='auto_init_amcl.py',
@@ -133,16 +133,16 @@ def generate_launch_description():
         }]
     )
     
-    # 使用 TimerAction 延迟启动自动初始化节点
+    # 使用 TimerAction 延遲啟動自動初始化節點
     delayed_auto_init = TimerAction(
-        period=5.0,  # 5秒后启动
+        period=5.0,  # 5秒後啟動
         actions=[auto_init_node]
     )
     
-    # ========== 创建 Launch Description ==========
+    # ========== 創建 Launch Description ==========
     ld = LaunchDescription()
     
-    # 添加参数声明
+    # 添加參數聲明
     ld.add_action(declare_serial_port)
     ld.add_action(declare_lidar_port)
     ld.add_action(declare_map_file)
@@ -152,11 +152,11 @@ def generate_launch_description():
     ld.add_action(declare_init_yaw)
     ld.add_action(declare_wait_time)
     
-    # 按顺序添加节点
-    ld.add_action(wl_base_node)           # 1. 机器人基础
-    ld.add_action(lidar_node)              # 2. 激光雷达
-    ld.add_action(navigation_system)       # 3. 导航系统
-    ld.add_action(delayed_auto_init)       # 4. 自动初始化（延迟）
+    # 按順序添加節點
+    ld.add_action(wl_base_node)           # 1. 機器人基礎
+    ld.add_action(lidar_node)              # 2. 激光雷達
+    ld.add_action(navigation_system)       # 3. 導航系統
+    ld.add_action(delayed_auto_init)       # 4. 自動初始化（延遲）
     
     return ld
 

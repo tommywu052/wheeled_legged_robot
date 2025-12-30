@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-轮足机器人 + N10 Lidar 完整导航 Launch 文件
+輪足機器人 + N10 Lidar 完整導航 Launch 文件
 功能：
-1. 加载地图
-2. 启动AMCL定位
-3. 启动完整Nav2导航栈（路径规划、控制、代价地图等）
-4. 启动机器人状态发布
+1. 加載地圖
+2. 啟動AMCL定位
+3. 啟動完整Nav2導航棧（路徑規劃、控制、代價地圖等）
+4. 啟動機器人狀態發布
 """
 
 from launch import LaunchDescription
@@ -16,23 +16,23 @@ import os
 
 def generate_launch_description():
     
-    # 获取包路径
+    # 獲取包路徑
     pkg_dir = os.path.expanduser('~/legged_robot/ROS2_Packages/src/wheeled_legged_pkg')
     
-    # 获取URDF文件路径
+    # 獲取URDF文件路徑
     urdf_file = os.path.expanduser('~/legged_robot/ROS2_Packages/src/wheel_legged_urdf_pkg/urdf/wheel_legged_urdf_pkg.urdf')
     
-    # 读取URDF文件
+    # 讀取URDF文件
     with open(urdf_file, 'r') as infp:
         robot_description = infp.read()
     
-    # 地图文件参数
+    # 地圖文件參數
     default_map_path = os.path.expanduser('~/maps/my_map2.yaml')
     
-    # Nav2参数文件
+    # Nav2參數文件
     nav2_params_file = os.path.join(pkg_dir, 'config', 'nav2_params.yaml')
     
-    # 声明启动参数
+    # 聲明啟動參數
     declare_map_arg = DeclareLaunchArgument(
         'map',
         default_value=default_map_path,
@@ -48,7 +48,7 @@ def generate_launch_description():
     map_yaml_file = LaunchConfiguration('map')
     params_file = LaunchConfiguration('params_file')
     
-    # 打印路径用于调试
+    # 打印路徑用於調試
     print(f"[INFO] Using map file: {default_map_path}")
     print(f"[INFO] Using params file: {nav2_params_file}")
     print(f"[INFO] Map file exists: {os.path.exists(default_map_path)}")
@@ -66,7 +66,7 @@ def generate_launch_description():
         }]
     )
     
-    # 2. Map Server（加载地图）
+    # 2. Map Server（加載地圖）
     map_server_node = Node(
         package='nav2_map_server',
         executable='map_server',
@@ -87,7 +87,7 @@ def generate_launch_description():
         parameters=[params_file]
     )
     
-    # 4. Controller Server（路径跟踪控制器）
+    # 4. Controller Server（路徑跟踪控制器）
     controller_server_node = Node(
         package='nav2_controller',
         executable='controller_server',
@@ -97,7 +97,7 @@ def generate_launch_description():
         remappings=[('/cmd_vel', '/cmd_vel')]
     )
     
-    # 5. Planner Server（全局路径规划器）
+    # 5. Planner Server（全局路徑規劃器）
     planner_server_node = Node(
         package='nav2_planner',
         executable='planner_server',
@@ -106,7 +106,7 @@ def generate_launch_description():
         parameters=[params_file]
     )
     
-    # 6. Behavior Server（恢复行为）
+    # 6. Behavior Server（恢復行為）
     behavior_server_node = Node(
         package='nav2_behaviors',
         executable='behavior_server',
@@ -115,7 +115,7 @@ def generate_launch_description():
         parameters=[params_file]
     )
     
-    # 7. BT Navigator（行为树导航器）
+    # 7. BT Navigator（行為樹導航器）
     bt_navigator_node = Node(
         package='nav2_bt_navigator',
         executable='bt_navigator',
@@ -124,7 +124,7 @@ def generate_launch_description():
         parameters=[params_file]
     )
     
-    # 8. Waypoint Follower（路点跟随器）
+    # 8. Waypoint Follower（路點跟隨器）
     waypoint_follower_node = Node(
         package='nav2_waypoint_follower',
         executable='waypoint_follower',
@@ -146,7 +146,7 @@ def generate_launch_description():
         ]
     )
     
-    # 10. Lifecycle Manager - Localization（定位生命周期管理）
+    # 10. Lifecycle Manager - Localization（定位生命週期管理）
     lifecycle_manager_localization = Node(
         package='nav2_lifecycle_manager',
         executable='lifecycle_manager',
@@ -159,7 +159,7 @@ def generate_launch_description():
         }]
     )
     
-    # 11. Lifecycle Manager - Navigation（导航生命周期管理）
+    # 11. Lifecycle Manager - Navigation（導航生命週期管理）
     lifecycle_manager_navigation = Node(
         package='nav2_lifecycle_manager',
         executable='lifecycle_manager',

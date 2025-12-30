@@ -2,13 +2,13 @@
 #include <vector>
 #include <string>
 #include <cstring>
-#include <unistd.h>          // 确保包含此头文件用于close()
+#include <unistd.h>          // 確保包含此頭文件用於close()
 #include <fcntl.h>
 #include <termios.h>
 #include <dirent.h>
 #include <sys/ioctl.h>
-#include <chrono>            // 确保包含此头文件
-#include <thread>            // 确保包含此头文件
+#include <chrono>            // 確保包含此頭文件
+#include <thread>            // 確保包含此頭文件
 #include <cctype>
 #include <cmath>
 #include <cstdint>
@@ -19,7 +19,7 @@
 
 
 
-// 全局变量定义
+// 全局變量定義
 ROS_body_t ROS_body;
 ROS_body_t1 ROS_body1;
 
@@ -59,10 +59,10 @@ void TxdMitData_init(void)
 
 
 /**
- * @brief 将角度转换为弧度
- * @param degrees 角度值（单位：度）
- * @return 对应的弧度值（单位：弧度）
- * @note 转换公式：弧度 = 角度 × π / 180
+ * @brief 將角度轉換為弧度
+ * @param degrees 角度值（單位：度）
+ * @return 對應的弧度值（單位：弧度）
+ * @note 轉換公式：弧度 = 角度 × π / 180
  */float degrees_to_radians(float degrees) 
 
 {
@@ -71,10 +71,10 @@ void TxdMitData_init(void)
 
 
 /**
- * @brief 将弧度转换为角度
- * @param radians 弧度值（单位：弧度）
- * @return 对应的角度值（单位：度）
- * @note 转换公式：角度 = 弧度 × 180 / π
+ * @brief 將弧度轉換為角度
+ * @param radians 弧度值（單位：弧度）
+ * @return 對應的角度值（單位：度）
+ * @note 轉換公式：角度 = 弧度 × 180 / π
  */
 float radians_to_degrees(float radians) 
 {
@@ -85,19 +85,19 @@ float radians_to_degrees(float radians)
 
 
 /**
- * @brief CRC16校验函数 (Modbus协议常用)
+ * @brief CRC16校驗函數 (Modbus協議常用)
  */
 uint16_t crc16(const uint8_t* data, uint32_t length) 
 {
     uint16_t crc = 0xFFFF;  // 初始值
     for (uint32_t i = 0; i < length; i++) {
-        crc ^= data[i];       // 与当前字节异或
+        crc ^= data[i];       // 與當前字節異或
         
-        // 按位处理
+        // 按位處理
         for (uint8_t j = 0; j < 8; j++) {
-            if (crc & 0x0001) { // 最低位为1
+            if (crc & 0x0001) { // 最低位為1
                 crc >>= 1;
-                crc ^= 0xA001;  // 多项式反转值 (0x8005)
+                crc ^= 0xA001;  // 多項式反轉值 (0x8005)
             } else {
                 crc >>= 1;
             }
@@ -110,34 +110,34 @@ uint16_t crc16(const uint8_t* data, uint32_t length)
 
 
 /**
- * @brief 将结构体数据复制到字节数组
+ * @brief 將結構體數據複製到字節數組
  */
 size_t structToArr(const ROS_body_t& structData, uint8_t* array, size_t arraySize) {
     const size_t structSize = sizeof(ROS_body_t);
     
-    // 安全检查：数组不为空且大小足够
+    // 安全檢查：數組不為空且大小足夠
     if (array == nullptr || arraySize < structSize) {
         return 0;
     }
     
-    // 内存拷贝（替代循环，效率更高）
+    // 內存拷貝（替代循環，效率更高）
     memcpy(array, &structData, structSize);
     return structSize;
 }
 
 /**
- * @brief 将结构体数据复制到字节数组
+ * @brief 將結構體數據複製到字節數組
  */
 size_t TXD_structToArr(const ComWheelLegged_t& structData, uint8_t* array, size_t arraySize) {
    
     const size_t structSize = sizeof(ComWheelLegged_t);
     
-    // 安全检查：数组不为空且大小足够
+    // 安全檢查：數組不為空且大小足夠
     if (array == nullptr || arraySize < structSize) {
         return 0;
     }
     
-    // 内存拷贝（替代循环，效率更高）
+    // 內存拷貝（替代循環，效率更高）
     memcpy(array, &structData, structSize);
     return structSize;
 }
@@ -147,12 +147,12 @@ size_t TXD_joint_structToArr(const TX_MIT_Data_t& structData, uint8_t* array, si
    
     const size_t structSize = sizeof(TX_MIT_Data_t);
     
-    // 安全检查：数组不为空且大小足够
+    // 安全檢查：數組不為空且大小足夠
     if (array == nullptr || arraySize < structSize) {
         return 0;
     }
     
-    // 内存拷贝（替代循环，效率更高）
+    // 內存拷貝（替代循環，效率更高）
     memcpy(array, &structData, structSize);
     return structSize;
 }
@@ -160,17 +160,17 @@ size_t TXD_joint_structToArr(const TX_MIT_Data_t& structData, uint8_t* array, si
 
 
 /**
- * @brief 将字节数组数据复制到结构体
+ * @brief 將字節數組數據複製到結構體
  */
 size_t arrToStruct(const uint8_t* array, size_t arraySize, ROS_body_t& structData) {
     const size_t structSize = sizeof(ROS_body_t);
     
-    // 安全检查：数组不为空且大小足够
+    // 安全檢查：數組不為空且大小足夠
     if (array == nullptr || arraySize < structSize) {
         return 0;
     }
     
-    // 内存拷贝
+    // 內存拷貝
     memcpy(&structData, array, structSize);
     return structSize;
 }
@@ -178,12 +178,12 @@ size_t arrToStruct(const uint8_t* array, size_t arraySize, ROS_body_t& structDat
 size_t arrToStruct1(const uint8_t* array, size_t arraySize, ROS_body_t1& structData) {
     const size_t structSize = sizeof(ROS_body_t1);
     
-    // 安全检查：数组不为空且大小足够
+    // 安全檢查：數組不為空且大小足夠
     if (array == nullptr || arraySize < structSize) {
         return 0;
     }
     
-    // 内存拷贝
+    // 內存拷貝
     memcpy(&structData, array, structSize);
     return structSize;
 }
@@ -191,10 +191,10 @@ size_t arrToStruct1(const uint8_t* array, size_t arraySize, ROS_body_t1& structD
 void printRobotStatus(const ROS_body_t& ros_body)
 {
     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "机器人状态:\n";
+    std::cout << "機器人狀態:\n";
 
-    std::cout << "    开关机: " << ros_body.Status.status.switched_on << "\n";
-    std::cout << "    机器工作模式: " << ros_body.Status.status.model << "\n";
+    std::cout << "    開關機: " << ros_body.Status.status.switched_on << "\n";
+    std::cout << "    機器工作模式: " << ros_body.Status.status.model << "\n";
 
 
 }
@@ -203,15 +203,15 @@ void printRobotStatus(const ROS_body_t& ros_body)
 void printMITFeedbackData(const ROS_body_t& ros_body)
 {
     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "电机反馈数据:\n";
+    std::cout << "電機反饋數據:\n";
     
     for (int i = 0; i < 6; ++i)
     {
-        std::cout << "  电机 " << i+1 << ":\n";
+        std::cout << "  電機 " << i+1 << ":\n";
         std::cout << "    位置: " << ros_body.MIT_Feedback_Data[i].position << "\n";
         std::cout << "    速度: " << ros_body.MIT_Feedback_Data[i].velocity << "\n";
         std::cout << "    力矩: " << ros_body.MIT_Feedback_Data[i].torque << "\n";
-        std::cout << "    温度: " << ros_body.MIT_Feedback_Data[i].Temp << "\n";
+        std::cout << "    溫度: " << ros_body.MIT_Feedback_Data[i].Temp << "\n";
     }
 }
 
@@ -219,11 +219,11 @@ void printMITFeedbackData(const ROS_body_t& ros_body)
 void printMitTxdData(const TX_MIT_Data_t& TX_Data)
 {
     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "电机电机反馈数据:\n";
+    std::cout << "電機電機反饋數據:\n";
     
     for (int i = 0; i < 6; ++i)
     {
-        std::cout << "  电机 " << i+1 << ":\n";
+        std::cout << "  電機 " << i+1 << ":\n";
         std::cout << "    位置: " << TX_Data.MIT_Command_Data[i].position << "\n";
         std::cout << "    速度: " << TX_Data.MIT_Command_Data[i].velocity << "\n";
         std::cout << "    力矩: " << TX_Data.MIT_Command_Data[i].effort << "\n";
@@ -237,7 +237,7 @@ void printMitTxdData(const TX_MIT_Data_t& TX_Data)
 void printSbusData(const ROS_body_t& ros_body)
 {
     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "遥控器通道数据:\n";
+    std::cout << "遙控器通道數據:\n";
     
     for (int i = 0; i < 10; ++i)
     {
@@ -249,52 +249,52 @@ void printSbusData(const ROS_body_t& ros_body)
 
 
 /**
- * @brief 打印里程计数据
+ * @brief 印odom數據
  */
 void printMilemeterData(const milemeter_t& milemeter) 
 {
     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "里程计数据:\n";
-    std::cout << "  左轮速度: " << milemeter.LeftWheelSpeed << " m/s\n";
-    std::cout << "  右轮速度: " << milemeter.RightWheelSpeed << " m/s\n";
-    std::cout << "  前进速度: " << milemeter.Speed << " m/s\n";
+    std::cout << "裡程計數據:\n";
+    std::cout << "  左輪速度: " << milemeter.LeftWheelSpeed << " m/s\n";
+    std::cout << "  右輪速度: " << milemeter.RightWheelSpeed << " m/s\n";
+    std::cout << "  前進速度: " << milemeter.Speed << " m/s\n";
     std::cout << "  角速度: " << milemeter.AngularVelocity << " rad/s\n";
 }
 
 /**
- * @brief 打印IMU傳感器數據
+ * @brief 印IMU傳感器數據
  */
 void printImuData(const ImuData_t& imu) 
 {
     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "IMU数据:\n";
+    std::cout << "IMU數據:\n";
     std::cout << "  加速度: [" 
               << imu.accel[0] << ", " 
               << imu.accel[1] << ", " 
               << imu.accel[2] << "] m/s²\n";
-    std::cout << "  陀螺仪: [" 
+    std::cout << "  陀螺儀: [" 
               << imu.gyro[0] << ", " 
               << imu.gyro[1] << ", " 
               << imu.gyro[2] << "] rad/s\n";
-    std::cout << "  四元数分量: [" 
+    std::cout << "  四元數分量: [" 
               << imu.q0 << ", " 
               << imu.q1 << ", " 
               << imu.q2 << ", " 
               << imu.q3 << "] \n";   
     
-    // 计算欧拉角（从四元数转换）
+    // 計算歐拉角（從四元數轉換）
     float roll = atan2(2*(imu.q0*imu.q1 + imu.q2*imu.q3), 1 - 2*(imu.q1*imu.q1 + imu.q2*imu.q2));
     float pitch = asin(2*(imu.q0*imu.q2 - imu.q3*imu.q1));
     float yaw = atan2(2*(imu.q0*imu.q3 + imu.q1*imu.q2), 1 - 2*(imu.q2*imu.q2 + imu.q3*imu.q3));
     
-    std::cout << "  姿态 (欧拉角):\n";
-    std::cout << "  横滚(Roll): " << roll * 180/M_PI << "°\n";
+    std::cout << "  姿態 (歐拉角):\n";
+    std::cout << "  橫滾(Roll): " << roll * 180/M_PI << "°\n";
     std::cout << "  俯仰(Pitch): " << pitch * 180/M_PI << "°\n";
     std::cout << "  偏航(Yaw): " << yaw * 180/M_PI << "°\n";
 }
 
 /**
- * @brief 枚举系统中可用的串口设备
+ * @brief 列舉系統中可用的串口設備
  */
 std::vector<std::string> listSerialPorts() {
     std::vector<std::string> ports;
@@ -306,7 +306,7 @@ std::vector<std::string> listSerialPorts() {
     while ((entry = readdir(dir)) != nullptr) {
         std::string name = entry->d_name;
         
-        // 识别常见的串口设备名格式
+        // 識別常見的串口設備名格式
         if (name.substr(0, 6) == "ttyUSB" || 
             name.substr(0, 6) == "ttyACM" ||
             name.substr(0, 4) == "ttyS"  ||
@@ -399,7 +399,7 @@ void displaySerialMenu(const std::vector<std::string>& ports) {
     std::cout << "  [R] 重新掃描串口" << std::endl;
     std::cout << "  [Q] 退出程序" << std::endl;
     std::cout << "=========================" << std::endl;
-    std::cout << "请选择要使用的串口 (1-" << ports.size() << "): ";
+    std::cout << "請選擇要使用的串口 (1-" << ports.size() << "): ";
 }
 
 /**
@@ -428,20 +428,20 @@ void RxtErrorHz(void)
 
 
 /**
- * @brief 读取并解析串口数据
+ * @brief 讀取並解析串口數據
  */
 void SERIAL_RXT(int serialFd) 
 {
     static unsigned long ms = millis();
     static unsigned long ms1 = millis();
-    static unsigned char count = 0;       // 接收字节计数
-    static unsigned char recstatu = 0;    // 接收状态标志
+    static unsigned char count = 0;       // 接收字節計數
+    static unsigned char recstatu = 0;    // 接收狀態標誌
     const size_t dataSize = sizeof(ROS_body_t);
     const size_t dataSize1 = sizeof(ROS_body_t1);
-    static uint8_t dataArray[dataSize];   // 接收数据缓冲区
+    static uint8_t dataArray[dataSize];   // 接收數據緩衝區
     uint16_t crc = 0;
 
-    // 检查串口是否有数据可读
+    // 檢查串口是否有數據可讀
     int bytesAvailable;
     ioctl(serialFd, FIONREAD, &bytesAvailable);
     RxtErrorHz();
@@ -450,7 +450,7 @@ void SERIAL_RXT(int serialFd)
         uint8_t dat;
         ssize_t bytesRead = read(serialFd, &dat, 1);
         if (bytesRead != 1) {
-            perror("读取串口数据失败");
+            perror("讀取串口數據失敗");
             break;
         }
         bytesAvailable--;
@@ -470,16 +470,16 @@ void SERIAL_RXT(int serialFd)
             recstatu = 1;  // 標記為已檢測到完整幀頭
             count = 2;
         }
-        else if (recstatu == 1) { // 接收数据体
+        else if (recstatu == 1) { // 接收數據體
             dataArray[count] = dat;
             count++;
             
-            // 检查是否接收到完整帧（根据长度字段判断）
+            // 檢查是否接收到完整幀（根據長度字段判斷）
             if (count >= dataArray[2]) 
             {
                 if(dataArray[2]==dataSize)
                 {
-                    // 计算CRC（不包括最后的CRC字段）
+                    // 計算CRC（不包括最後的CRC字段）
                     crc = crc16(dataArray, dataSize - 2);
                     
                     ROS_body_t restoredStruct;
@@ -524,13 +524,13 @@ void SERIAL_RXT(int serialFd)
                             }
                   
 
-                            // 打印16进制（带格式控制）
+                            // 打印16進制（帶格式控制）
                             std::cout << "ROS CRC (16进制): 0x" 
                                     << std::hex                  // 切换为16进制模式
                                     << std::setw(4)              // 固定宽度（16位CRC需要4个16进制位）
                                     << std::setfill('0')         // 不足宽度时用0填充
                                     << std::uppercase            // 大写字母（可选）
-                                    << static_cast<unsigned int>(ROS_body.crc)  // 强制转换为整数类型
+                                    << static_cast<unsigned int>(ROS_body.crc)  // 強制轉換為整數類型
                                     << std::dec                  // 恢复十进制模式（避免影响后续输出）
                                     << std::endl;
 
@@ -585,13 +585,13 @@ void SERIAL_RXT(int serialFd)
                             }
 
 
-                            // 打印16进制（带格式控制）
+                            // 打印16進制（帶格式控制）
                             std::cout << "1ROS CRC (16进制): 0x" 
                                     << std::hex                  // 切换为16进制模式
                                     << std::setw(4)              // 固定宽度（16位CRC需要4个16进制位）
                                     << std::setfill('0')         // 不足宽度时用0填充
                                     << std::uppercase            // 大写字母（可选）
-                                    << static_cast<unsigned int>(ROS_body1.crc)  // 强制转换为整数类型
+                                    << static_cast<unsigned int>(ROS_body1.crc)  // 強制轉換為整數類型
                                     << std::dec                  // 恢复十进制模式（避免影响后续输出）
                                     << std::endl;
                         }
@@ -604,11 +604,11 @@ void SERIAL_RXT(int serialFd)
                 }
                 else
                 {
-                    std::cout << "接收数据 长度错误\n";
+                    std::cout << "接收數據 長度錯誤\n";
 
                 }
 
-                // 重置接收状态
+                // 重置接收狀態
                 memset(dataArray, 0, dataSize);
                 recstatu = 0;
                 count = 0;
