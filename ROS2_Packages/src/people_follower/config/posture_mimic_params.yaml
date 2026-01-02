@@ -1,0 +1,55 @@
+posture_mimic_node:
+  ros__parameters:
+    # ========== 相機設置 ==========
+    camera_topic: "/camera/camera/color/image_raw"
+    camera_pitch_deg: 15.0            # 相機向上傾斜角度（度）
+    camera_height: 0.3                # 相機離地高度（米）實測值：30cm
+    
+    # ========== YOLO 模型設置 ==========
+    yolo_model: "yolov8n-pose.pt"    # YOLOv8 姿態檢測模型
+                                      # 🚀 建議使用 TensorRT: "yolov8n-pose.engine" (2-4倍性能提升)
+                                      # 轉換命令: yolo export model=yolov8n-pose.pt format=engine
+    confidence: 0.4                   # 檢測置信度閾值（降低以檢測蹲下姿態）
+    device: "cuda:0"                  # 使用 GPU 加速
+    
+    # ========== 功能開關 ==========
+    enable_mimic: true                # 啟用姿態模仿
+    publish_rate: 30                  # 發布頻率 (Hz)（從20提升到30，更快響應）
+    
+    # ========== 機器人姿態範圍 ==========
+    # 高度參數（米）
+    height_stand: 0.25                # 標準站立高度（初始高度）⭐
+    height_squat: 0.16                # 蹲下高度
+    height_max: 0.35                  # 最大高度（站高）
+    height_min: 0.14                  # 最小高度（深蹲）
+    
+    # 角度參數（度）
+    roll_max: 20.0                    # 橫滾最大角度（雙手舉高控制：左手-20°，右手+20°）⭐
+    pitch_max: 30.0                   # 俯仰最大角度（右手指向控制：±30°）⭐
+    
+    # ========== 檢測參數 ==========
+    min_confidence: 0.15              # 關鍵點最小置信度（從0.2降低到0.15）
+    detection_timeout: 3.0            # 檢測超時（秒）未檢測到人後保持姿態的時間
+    smoothing_window: 3               # 平滑濾波窗口大小（從5降低到3，更敏捷）
+    
+    # ========== 變化閾值（防止抖動）==========
+    height_deadzone: 0.01             # 高度變化死區（從5cm降低到1cm）
+    roll_deadzone: 3.0                # 橫滾變化死區（度）
+    pitch_deadzone: 10.0              # 俯仰變化死區（度）±30°範圍，死區10°
+    
+    # ========== 變化速率限制（防止突變）==========
+    max_height_change: 0.12           # 單次最大高度變化（從8cm增加到12cm，更敏捷）
+    max_roll_change: 3.0              # 單次最大橫滾變化（度）（從2提升到3）
+    max_pitch_change: 10.0            # 單次最大俯仰變化（度）3檔切換（±30°），可快速變化
+    
+    # ========== 功能開關 ==========
+    enable_height: true               # 啟用高度模仿
+    enable_roll: true                 # 啟用橫滾模仿（雙手舉高控制）⭐
+    enable_pitch: false               # 暫時關閉俯仰（測試橫滾檢測）⭐
+    
+    # ========== 舉手姿態檢測 ==========
+    hands_up_threshold: 0.5           # 舉手檢測閾值（相對於肩寬，0.5 = 50%）
+    
+    # ========== 調試 ==========
+    debug: true                       # 啟用調試輸出
+

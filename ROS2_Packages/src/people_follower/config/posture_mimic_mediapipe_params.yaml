@@ -1,0 +1,59 @@
+posture_mimic_mediapipe_node:
+  ros__parameters:
+    # ========== 話題配置 ==========
+    camera_topic: '/camera/camera/color/image_raw'
+    depth_topic: '/camera/camera/aligned_depth_to_color/image_raw'
+    camera_info_topic: '/camera/camera/color/camera_info'
+    
+    # ========== 基本參數 ==========
+    enable_mimic: true
+    publish_rate: 30  # Hz (MediaPipe 更快)
+    
+    # ========== MediaPipe 參數 ==========
+    min_detection_confidence: 0.5    # 初次檢測置信度
+    min_tracking_confidence: 0.5     # 追蹤置信度
+    model_complexity: 1              # 0=Lite(快), 1=Full(平衡), 2=Heavy(精準)
+    smooth_landmarks: true           # 啟用 MediaPipe 內建平滑
+    
+    # ========== 姿態範圍 ==========
+    height_stand: 0.25    # 站立高度（米）
+    height_squat: 0.16    # 蹲下高度（米）
+    height_tall: 0.35     # 站高高度（米）- 舉手時
+    height_max: 0.36      # 最大高度限制
+    height_min: 0.14      # 最小高度限制
+    roll_max: 20.0        # 橫滾最大角度（度）
+    pitch_max: 35.0       # 俯仰最大角度（度）
+    
+    # ========== EMA 濾波參數 ==========
+    # 指數移動平均（Exponential Moving Average）
+    # alpha 越大 = 響應越快，但越抖
+    # alpha 越小 = 越平滑，但延遲越大
+    ema_alpha_fast: 0.3   # 快速濾波（用於關節點）
+    ema_alpha_slow: 0.1   # 慢速濾波（用於高度）
+    
+    # ========== Hysteresis 參數 ==========
+    # 防止狀態抖動（在臨界點來回切換）
+    height_hysteresis: 0.03      # 高度切換滯後（米）
+    hands_up_hysteresis: 0.1     # 舉手切換滯後（0.0-1.0）
+    
+    # ========== 變化速率限制 ==========
+    # 防止突變，確保平滑過渡
+    max_height_change: 0.15      # 單次最大高度變化（米/幀）
+    max_roll_change: 5.0         # 單次最大橫滾變化（度/幀）
+    max_pitch_change: 15.0       # 單次最大俯仰變化（度/幀）
+    
+    # ========== 功能開關 ==========
+    enable_height: true          # 啟用高度控制
+    enable_roll: false           # 啟用橫滾控制（可開啟，MediaPipe 更穩）
+    enable_pitch: true           # 啟用俯仰控制
+    enable_hands_up: true        # 啟用舉手檢測（站高功能）
+    
+    # ========== 深度測量參數 ==========
+    camera_height: 0.3           # 相機離地高度（米）
+    camera_pitch: 15.0           # 相機俯仰角度（度，向上為正）
+    depth_roi_size: 5            # 深度 ROI 大小（像素）
+    use_depth_median: true       # 使用中位數（更穩定）vs 均值
+    
+    # ========== 檢測超時 ==========
+    detection_timeout: 3.0       # 未檢測到人後的超時時間（秒）
+

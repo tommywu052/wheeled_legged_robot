@@ -27,6 +27,7 @@
 
 - [第一部分：建圖系統](#第一部分建圖系統) - 使用 SLAM 建立環境地圖
 - [第二部分：導航系統](#第二部分導航系統) - 一鍵啟動自主導航
+- [第三部分：人物跟隨與姿態模仿](#第三部分人物跟隨與姿態模仿) - 智能互動功能
 
 ---
 
@@ -417,5 +418,227 @@ ros2 run tf2_ros view_frames
 ```
 
 享受自動化的導航體驗！🚀
+
+---
+
+---
+
+# 第三部分：人物跟隨與姿態模仿
+
+## 🤖 智能互動功能
+
+這個套件為輪足機器人添加了兩大智能互動功能，讓機器人能夠與人自然互動！
+
+---
+
+## 🎯 功能一：人體追蹤 (People Following)
+
+機器人可以自動偵測並跟隨人體移動：
+
+### 核心特性
+- ✅ **實時人體偵測**：支援 HOG/DNN/YOLO 多種偵測方法
+- ✅ **深度資訊融合**：使用 Intel RealSense 相機精確測距
+- ✅ **自適應速度控制**：根據距離自動調整跟隨速度
+- ✅ **安全距離保持**：智能保持安全跟隨距離（0.5m - 2.0m）
+- ✅ **視覺化除錯**：即時顯示偵測結果和追蹤狀態
+
+### 快速啟動
+
+```bash
+# 啟動人體追蹤（使用 YOLO 方法）
+ros2 launch people_follower people_follower_yolo.launch.py
+
+# 或使用基礎版本（HOG 方法）
+ros2 launch people_follower people_follower.launch.py
+```
+
+---
+
+## 🤸 功能二：姿態模仿 (Posture Mimic) ⭐
+
+機器人可以模仿人體的姿態動作，實現直覺的肢體控制：
+
+### 核心特性
+- ✅ **橫滾控制**：雙手舉高控制機器人左右傾斜（±20°）
+  - 左手舉高 → 機器人向左傾
+  - 右手舉高 → 機器人向右傾
+- ✅ **高度控制**：透過蹲下/站立控制機器人高度（0.14m - 0.35m）
+  - 蹲下 → 機器人降低高度
+  - 站立 → 機器人升高
+  - 雙手舉高站直 → 機器人最高姿態
+- ✅ **俯仰控制**：右手指向控制視角（±30°，可選功能）
+- ✅ **超時重置**：3 秒無偵測自動恢復初始姿態
+- ✅ **智能檢測**：避免誤觸發（平舉不會觸發橫滾控制）
+
+### 快速啟動
+
+```bash
+# 啟動姿態模仿（使用 MediaPipe）
+ros2 launch people_follower posture_mimic_mediapipe.launch.py
+
+# 同時啟動追蹤和模仿
+ros2 launch people_follower people_follower_with_mimic.launch.py
+```
+
+---
+
+## 🎥 演示效果
+
+### 人體追蹤演示
+- 機器人自動偵測最近的人
+- 保持安全距離跟隨
+- 遇到障礙物自動停止
+
+### 姿態模仿演示
+- 舉起左手 → 機器人向左傾斜
+- 舉起右手 → 機器人向右傾斜
+- 蹲下 → 機器人降低高度
+- 雙手舉高站直 → 機器人最高姿態
+
+---
+
+## 📦 硬體需求
+
+### 必需設備
+- **Intel RealSense D435/D435i** 深度相機
+- **NVIDIA Jetson Orin NX** (建議 16GB)
+- **輪足機器人平台** 支援高度和姿態控制
+
+### 軟體需求
+- Ubuntu 22.04
+- ROS2 Humble
+- OpenCV 4.x
+- MediaPipe (姿態模仿功能)
+- TensorRT (可選，YOLO 加速)
+
+---
+
+## 🚀 安裝與配置
+
+### 步驟 3-1：安裝依賴
+
+```bash
+# 安裝 ROS2 依賴
+sudo apt install -y \
+    ros-humble-cv-bridge \
+    ros-humble-image-transport \
+    ros-humble-realsense2-camera \
+    ros-humble-sensor-msgs \
+    ros-humble-geometry-msgs
+
+# 安裝 Python 依賴
+pip3 install opencv-python mediapipe numpy
+```
+
+### 步驟 3-2：編譯套件
+
+```bash
+cd ~/legged_robot/ROS2_Packages
+colcon build --packages-select people_follower --symlink-install
+source install/setup.bash
+```
+
+### 步驟 3-3：連接相機
+
+```bash
+# 檢查 RealSense 相機
+rs-enumerate-devices
+
+# 啟動相機節點（如需單獨測試）
+ros2 launch realsense2_camera rs_launch.py
+```
+
+---
+
+## 📖 詳細文檔
+
+更多詳細資訊，包括參數配置、進階功能、故障排查等，請參閱：
+
+📄 **[People Follower 完整文檔](./ROS2_Packages/src/people_follower/README.md)**
+
+內容包括：
+- 🔧 詳細安裝步驟
+- ⚙️ 參數配置說明
+- 🎮 多種啟動模式
+- 🐛 故障排查指南
+- 💡 進階功能使用
+- ⚠️ 安全使用建議
+- 🔥 TensorRT 加速配置
+
+---
+
+## 🛡️ 安全建議
+
+### ⚠️ 使用前必讀
+
+1. **測試環境**：
+   - 首次使用請在空曠、無障礙物的環境測試
+   - 確保周圍有足夠安全空間
+
+2. **速度限制**：
+   - 建議初始速度設定較低（0.2 m/s）
+   - 熟悉後再逐步提高
+
+3. **緊急停止**：
+   - 隨時準備按下緊急停止按鈕
+   - 或在終端按 `Ctrl+C` 停止節點
+
+4. **監控距離**：
+   - 保持在相機有效範圍內（0.5m - 3.0m）
+   - 避免過近或過遠
+
+---
+
+## 🎯 使用場景
+
+### 適用場景
+- 🏠 **家庭助手**：跟隨主人移動，提供陪伴
+- 🏥 **醫療護理**：協助行動不便者
+- 🎓 **教育展示**：機器人互動教學
+- 🏭 **工業巡檢**：跟隨工作人員進行巡檢
+- 🎪 **娛樂互動**：展覽、活動中的互動展示
+
+---
+
+## ✅ 功能驗證
+
+### 驗證人體追蹤
+
+```bash
+# 檢查相機話題
+ros2 topic hz /camera/color/image_raw
+ros2 topic hz /camera/depth/image_rect_raw
+
+# 檢查偵測結果
+ros2 topic echo /person_detected
+
+# 檢查速度指令
+ros2 topic echo /cmd_vel
+```
+
+### 驗證姿態模仿
+
+```bash
+# 檢查姿態偵測
+ros2 topic echo /posture_commands
+
+# 檢查機器人狀態
+ros2 topic echo /robot_pose
+
+# 即時監控
+rqt_graph
+```
+
+---
+
+## 🎊 開始體驗智能互動！
+
+現在你的輪足機器人已經具備完整的智能互動能力：
+
+1. 🗺️ **建圖** - 建立環境地圖
+2. 🚀 **導航** - 自主路徑規劃
+3. 🤖 **互動** - 人物跟隨與姿態模仿
+
+享受與機器人的智能互動體驗！🎉
 
 

@@ -1,0 +1,30 @@
+# People Follower YOLO配置參數
+
+people_follower_yolo:
+  ros__parameters:
+    # YOLO模型選擇
+    # yolov8n.pt - 最快（推薦Jetson Nano）
+    # yolov8s.pt - 平衡（推薦Jetson Xavier NX）
+    # yolov8m.pt - 準確（需要更強GPU）
+    yolo_model: 'yolov8n.pt'
+    
+    # YOLO信心閾值（0.0-1.0）
+    confidence_threshold: 0.5    # 降低可增加檢測率，但可能增加誤檢
+    
+    # 距離參數 (公尺)
+    target_distance: 0.5    # 目標追蹤距離（調整為40cm近距離跟隨）
+    min_distance: 0.4       # 最小安全距離（30cm，適應低位相機）
+    max_distance: 3.0       # 最大偵測距離
+    
+    # 速度限制 (m/s 和 rad/s)
+    max_linear_speed: 0.3   # 最大前進速度
+    max_angular_speed: 0.4  # 最大旋轉速度（從0.8降低到0.4）
+    
+    # 控制增益
+    linear_gain: 0.35        # 線速度增益（從0.5降低到0.3，更溫和的前後反應）
+    angular_gain: 0.85       # 角速度增益（從2.0降低到0.8，減少靈敏度）
+    
+    # 功能開關
+    enable_follower: true   # 是否啟用追蹤
+    publish_debug_image: true  # 是否發佈除錯影像
+

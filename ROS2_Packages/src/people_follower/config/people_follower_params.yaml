@@ -1,0 +1,23 @@
+# People Follower 配置參數
+
+people_follower_node:
+  ros__parameters:
+    # 偵測方法: 'hog' (快速，CPU) 或 'dnn' (準確，需要模型檔案)
+    detection_method: 'hog'
+    
+    # 距離參數 (公尺)
+    target_distance: 1.0    # 目標追蹤距離
+    min_distance: 0.5       # 最小安全距離
+    max_distance: 3.0       # 最大偵測距離
+    
+    # 速度限制 (m/s 和 rad/s)
+    max_linear_speed: 0.3   # 最大前進速度（建議從小值開始測試）
+    max_angular_speed: 0.8  # 最大旋轉速度
+    
+    # 控制增益（調整響應速度）
+    linear_gain: 0.5        # 線速度增益（越大響應越快）
+    angular_gain: 2.0       # 角速度增益（越大轉向越快）
+    
+    # 功能開關
+    enable_follower: true   # 是否啟用追蹤（false時只偵測不移動）
+    publish_debug_image: true  # 是否發佈除錯影像
